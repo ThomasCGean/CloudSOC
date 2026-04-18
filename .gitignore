@@ -35,3 +35,48 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Lock file
+.terraform.lock.hcl
+
+# Variable files / secrets
+terraform.tfvars
+terraform.tfvars.json
+*.auto.tfvars.json
+secrets.auto.tfvars
+*.secret
+*.pem
+*.key
+*.pfx
+*.csr
+
+# Environment files
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# VS Code local workspace
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
