@@ -40,6 +40,11 @@ variable "instance_profile_name" {
   type        = string
 }
 
+variable "shuffle_security_group_id" {
+  description = "Existing security group ID to attach to the Shuffle EC2 instance."
+  type        = string
+}
+
 variable "root_volume_size" {
   description = "Size in GiB of the root EBS volume."
   type        = number
@@ -50,12 +55,6 @@ variable "root_volume_type" {
   description = "EBS volume type for the root volume."
   type        = string
   default     = "gp3"
-}
-
-variable "shuffle_allowed_source_sg_ids" {
-  description = "List of security group IDs allowed to reach Shuffle on the application port."
-  type        = list(string)
-  default     = []
 }
 
 variable "shuffle_ingress_port" {

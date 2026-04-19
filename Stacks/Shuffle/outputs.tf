@@ -15,7 +15,7 @@ output "shuffle_private_dns" {
 
 output "shuffle_security_group_id" {
   description = "Security group ID attached to the Shuffle server."
-  value       = aws_security_group.shuffle.id
+  value       = var.shuffle_security_group_id
 }
 
 output "shuffle_ingress_port" {

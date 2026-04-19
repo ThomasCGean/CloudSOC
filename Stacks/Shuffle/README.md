@@ -1,13 +1,17 @@
 # Shuffle Stack
 
-This Terraform stack deploys a single private EC2 instance for Shuffle using a prebuilt golden AMI.
+This Terraform stack deploys a single private EC2 instance for Shuffle using a prebuilt golden AMI and an existing security group.
 
 ## What it creates
 
 - 1 EC2 instance for Shuffle
-- 1 security group for the Shuffle instance
-- 1 or more SG-to-SG ingress rules based on allowed source security groups
-- allow-all outbound egress rules
+
+## What it uses
+
+- 1 existing security group for the Shuffle instance
+- 1 existing IAM instance profile, typically for SSM access
+- 1 existing private subnet
+- 1 existing AMI
 
 ## What it does not create
 
@@ -17,6 +21,7 @@ This Terraform stack deploys a single private EC2 instance for Shuffle using a p
 - No user data bootstrap
 - No private DNS
 - No EIP or public IP by default
+- No security group or security group rules
 
 ## Required inputs
 
@@ -28,10 +33,10 @@ At minimum, provide values for:
 - `subnet_id`
 - `ami_id`
 - `instance_profile_name`
+- `shuffle_security_group_id`
 
 You will usually also want:
 
-- `shuffle_allowed_source_sg_ids`
 - `instance_type`
 - `root_volume_size`
 
