@@ -17,3 +17,8 @@ output "splunk_security_group_id" {
   description = "Attached Splunk security group ID."
   value       = var.splunk_security_group_id
 }
+
+output "splunk_ingress_port" {
+  description = "Primary Splunk port for reference."
+  value       = var.splunk_ingress_port
+}

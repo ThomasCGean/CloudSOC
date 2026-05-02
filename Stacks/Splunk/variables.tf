@@ -65,3 +65,14 @@ variable "tags" {
   description = "Additional tags to merge with common tags."
   default     = {}
 }
+
+variable "splunk_private_ip" {
+  type        = string
+  description = "Fixed private IP address for the Splunk instance."
+}
+
+variable "splunk_ingress_port" {
+  type        = number
+  description = "Primary Splunk service port for reference."
+  default     = 8000
+}
