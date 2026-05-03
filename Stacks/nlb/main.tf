@@ -4,7 +4,7 @@ locals {
       Name        = "${var.name}-${var.environment}"
       Project     = "CloudSOC"
       Environment = var.environment
-      Tool        = "SOC-Ingress-NLB"
+      Tool        = "NLB"
       ManagedBy   = "Terraform"
     },
     var.tags
@@ -124,41 +124,5 @@ resource "aws_lb_listener" "splunk_uf" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.splunk_uf.arn
-  }
-}
-
-resource "aws_route53_record" "wazuh" {
-  zone_id = var.route53_zone_id
-  name    = "wazuh.${var.domain_name}"
-  type    = "A"
-
-  alias {
-    name                   = aws_lb.soc_ingress.dns_name
-    zone_id                = aws_lb.soc_ingress.zone_id
-    evaluate_target_health = true
-  }
-}
-
-resource "aws_route53_record" "enroll" {
-  zone_id = var.route53_zone_id
-  name    = "enroll.${var.domain_name}"
-  type    = "A"
-
-  alias {
-    name                   = aws_lb.soc_ingress.dns_name
-    zone_id                = aws_lb.soc_ingress.zone_id
-    evaluate_target_health = true
-  }
-}
-
-resource "aws_route53_record" "hec" {
-  zone_id = var.route53_zone_id
-  name    = "hec.${var.domain_name}"
-  type    = "A"
-
-  alias {
-    name                   = aws_lb.soc_ingress.dns_name
-    zone_id                = aws_lb.soc_ingress.zone_id
-    evaluate_target_health = true
   }
 }

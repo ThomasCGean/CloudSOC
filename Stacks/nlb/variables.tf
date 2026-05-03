@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "name" {
   type    = string
-  default = "soc-ingress-nlb"
+  default = "nlb"
 }
 
 variable "environment" {
@@ -26,13 +26,9 @@ variable "nlb_security_group_ids" {
   description = "Existing security group IDs to attach to the Network Load Balancer."
 }
 
-variable "route53_zone_id" {
-  type = string
-}
-
-variable "domain_name" {
-  type    = string
-  default = "thomascloudsoc.com"
+variable "acm_certificate_arn" {
+  type        = string
+  description = "Existing ACM certificate ARN to use on TLS listeners. Terraform does not create this certificate."
 }
 
 variable "wazuh_private_ip" {
@@ -49,9 +45,4 @@ variable "splunk_private_ip" {
 variable "tags" {
   type    = map(string)
   default = {}
-}
-
-variable "acm_certificate_arn" {
-  type        = string
-  description = "ACM certificate ARN for *.thomascloudsoc.com or the specific NLB DNS names."
 }
