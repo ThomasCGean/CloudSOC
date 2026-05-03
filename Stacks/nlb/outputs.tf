@@ -14,8 +14,12 @@ output "enroll_dns_name" {
   value = aws_route53_record.enroll.fqdn
 }
 
-output "splunk_uf_dns_name" {
+output "splunk_hec_dns_name" {
   value = aws_route53_record.hec.fqdn
+}
+
+output "splunk_uf_dns_name" {
+  value = aws_route53_record.uf.fqdn
 }
 
 output "wazuh_logs_target_group_arn" {

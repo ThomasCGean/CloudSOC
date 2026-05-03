@@ -168,3 +168,17 @@ resource "aws_route53_record" "hec" {
     evaluate_target_health = true
   }
 }
+
+resource "aws_route53_record" "uf" {
+  zone_id = var.route53_zone_id
+  name    = "uf.${var.domain_name}"
+  type    = "A"
+
+  allow_overwrite = true
+
+  alias {
+    name                   = aws_lb.soc_ingress.dns_name
+    zone_id                = aws_lb.soc_ingress.zone_id
+    evaluate_target_health = true
+  }
+}
