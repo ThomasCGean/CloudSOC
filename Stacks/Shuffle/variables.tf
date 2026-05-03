@@ -74,3 +74,8 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "shuffle_private_ip" {
+  description = "Static private IP address to assign to the Shuffle EC2 instance."
+  type        = string
+}
