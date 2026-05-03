@@ -26,9 +26,14 @@ variable "nlb_security_group_ids" {
   description = "Existing security group IDs to attach to the Network Load Balancer."
 }
 
-variable "acm_certificate_arn" {
+variable "route53_zone_id" {
   type        = string
-  description = "Existing ACM certificate ARN to use on TLS listeners. Terraform does not create this certificate."
+  description = "Route53 Hosted Zone ID for thomascloudsoc.com"
+}
+
+variable "domain_name" {
+  type    = string
+  default = "thomascloudsoc.com"
 }
 
 variable "wazuh_private_ip" {

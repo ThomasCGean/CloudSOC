@@ -88,12 +88,12 @@ resource "aws_lb_target_group_attachment" "splunk_uf" {
   port             = 9997
 }
 
+# ✅ UPDATED: TCP listeners (no TLS termination at NLB)
+
 resource "aws_lb_listener" "wazuh_logs" {
   load_balancer_arn = aws_lb.soc_ingress.arn
   port              = 1514
-  protocol          = "TLS"
-  certificate_arn   = var.acm_certificate_arn
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
@@ -104,9 +104,7 @@ resource "aws_lb_listener" "wazuh_logs" {
 resource "aws_lb_listener" "wazuh_enroll" {
   load_balancer_arn = aws_lb.soc_ingress.arn
   port              = 1515
-  protocol          = "TLS"
-  certificate_arn   = var.acm_certificate_arn
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
@@ -117,12 +115,54 @@ resource "aws_lb_listener" "wazuh_enroll" {
 resource "aws_lb_listener" "splunk_uf" {
   load_balancer_arn = aws_lb.soc_ingress.arn
   port              = 9997
-  protocol          = "TLS"
-  certificate_arn   = var.acm_certificate_arn
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.splunk_uf.arn
+  }
+}
+
+# Route53 records (unchanged; still overwrite existing)
+
+resource "aws_route53_record" "wazuh" {
+  zone_id = var.route53_zone_id
+  name    = "wazuh.${var.domain_name}"
+  type    = "A"
+
+  allow_overwrite = true
+
+  alias {
+    name                   = aws_lb.soc_ingress.dns_name
+    zone_id                = aws_lb.soc_ingress.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "enroll" {
+  zone_id = var.route53_zone_id
+  name    = "enroll.${var.domain_name}"
+  type    = "A"
+
+  allow_overwrite = true
+
+  alias {
+    name                   = aws_lb.soc_ingress.dns_name
+    zone_id                = aws_lb.soc_ingress.zone_id
+    evaluate_target_health = true
+  }
+}
+
+resource "aws_route53_record" "hec" {
+  zone_id = var.route53_zone_id
+  name    = "hec.${var.domain_name}"
+  type    = "A"
+
+  allow_overwrite = true
+
+  alias {
+    name                   = aws_lb.soc_ingress.dns_name
+    zone_id                = aws_lb.soc_ingress.zone_id
+    evaluate_target_health = true
   }
 }

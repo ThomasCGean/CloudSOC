@@ -6,6 +6,18 @@ output "nlb_arn" {
   value = aws_lb.soc_ingress.arn
 }
 
+output "wazuh_dns_name" {
+  value = aws_route53_record.wazuh.fqdn
+}
+
+output "enroll_dns_name" {
+  value = aws_route53_record.enroll.fqdn
+}
+
+output "splunk_uf_dns_name" {
+  value = aws_route53_record.hec.fqdn
+}
+
 output "wazuh_logs_target_group_arn" {
   value = aws_lb_target_group.wazuh_logs.arn
 }
