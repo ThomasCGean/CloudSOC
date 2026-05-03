@@ -38,7 +38,7 @@ variable "domain_name" {
 
 variable "acm_certificate_arn" {
   type        = string
-  description = "Existing ACM certificate ARN used by the NLB TLS listeners. Terraform does not create this certificate."
+  description = "Existing ACM certificate ARN used by the NLB TLS listener (Splunk UF only). Terraform does not create this certificate."
 }
 
 variable "wazuh_private_ip" {

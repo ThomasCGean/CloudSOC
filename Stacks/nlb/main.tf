@@ -91,9 +91,7 @@ resource "aws_lb_target_group_attachment" "splunk_uf" {
 resource "aws_lb_listener" "wazuh_logs" {
   load_balancer_arn = aws_lb.soc_ingress.arn
   port              = 1514
-  protocol          = "TLS"
-  certificate_arn   = var.acm_certificate_arn
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
@@ -104,9 +102,7 @@ resource "aws_lb_listener" "wazuh_logs" {
 resource "aws_lb_listener" "wazuh_enroll" {
   load_balancer_arn = aws_lb.soc_ingress.arn
   port              = 1515
-  protocol          = "TLS"
-  certificate_arn   = var.acm_certificate_arn
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  protocol          = "TCP"
 
   default_action {
     type             = "forward"
