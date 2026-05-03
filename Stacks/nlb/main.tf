@@ -88,12 +88,12 @@ resource "aws_lb_target_group_attachment" "splunk_uf" {
   port             = 9997
 }
 
-# ✅ UPDATED: TCP listeners (no TLS termination at NLB)
-
 resource "aws_lb_listener" "wazuh_logs" {
   load_balancer_arn = aws_lb.soc_ingress.arn
   port              = 1514
-  protocol          = "TCP"
+  protocol          = "TLS"
+  certificate_arn   = var.acm_certificate_arn
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
 
   default_action {
     type             = "forward"
@@ -104,7 +104,9 @@ resource "aws_lb_listener" "wazuh_logs" {
 resource "aws_lb_listener" "wazuh_enroll" {
   load_balancer_arn = aws_lb.soc_ingress.arn
   port              = 1515
-  protocol          = "TCP"
+  protocol          = "TLS"
+  certificate_arn   = var.acm_certificate_arn
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
 
   default_action {
     type             = "forward"
@@ -115,15 +117,15 @@ resource "aws_lb_listener" "wazuh_enroll" {
 resource "aws_lb_listener" "splunk_uf" {
   load_balancer_arn = aws_lb.soc_ingress.arn
   port              = 9997
-  protocol          = "TCP"
+  protocol          = "TLS"
+  certificate_arn   = var.acm_certificate_arn
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
 
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.splunk_uf.arn
   }
 }
-
-# Route53 records (unchanged; still overwrite existing)
 
 resource "aws_route53_record" "wazuh" {
   zone_id = var.route53_zone_id

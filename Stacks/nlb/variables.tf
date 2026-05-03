@@ -28,12 +28,17 @@ variable "nlb_security_group_ids" {
 
 variable "route53_zone_id" {
   type        = string
-  description = "Route53 Hosted Zone ID for thomascloudsoc.com"
+  description = "Route53 Hosted Zone ID for thomascloudsoc.com."
 }
 
 variable "domain_name" {
   type    = string
   default = "thomascloudsoc.com"
+}
+
+variable "acm_certificate_arn" {
+  type        = string
+  description = "Existing ACM certificate ARN used by the NLB TLS listeners. Terraform does not create this certificate."
 }
 
 variable "wazuh_private_ip" {
